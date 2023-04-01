@@ -1,6 +1,9 @@
-name: Hackathon-Frontend-Build
+name: Hackathon-Frontend-Build-Deploy
 
-on: push
+on: 
+  push:
+      branches:
+        - 'master'
 
 jobs:
   build:
