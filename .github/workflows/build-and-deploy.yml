@@ -1,0 +1,35 @@
+name: Hackathon-Frontend-Build
+
+on: push
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm run test
+        env:
+          CI: true
+
+      - name: Generate build
+        run: npm run build
+
+      - name: Deploy
+        uses: lbertenasco/s3-deploy@v1
+        with:
+          folder: build
+          bucket: ${{ secrets.S3_BUCKET }}
+          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          invalidation: / *
