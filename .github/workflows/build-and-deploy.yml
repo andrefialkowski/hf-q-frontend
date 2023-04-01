@@ -25,6 +25,9 @@ jobs:
 
       - name: Generate build
         run: npm run build
+        env:
+          CI: false
+          
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
